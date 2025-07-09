@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import PropertyCard from '@/components/properties/PropertyCard';
 
@@ -156,14 +156,14 @@ export default function PropertiesSection() {
   ];
 
   const allProperties = [...properties, ...soldProperties];
-  const itemsPerSlide = 1;
+  
   // Mobile: 1 card per slide, Desktop: 3 cards visible but 1 slide
-  const getMaxSlides = () => {
+  const getMaxSlides = useCallback(() => {
     if (typeof window !== 'undefined' && window.innerWidth < 1024) {
       return allProperties.length; // Mobile: each card is a slide
     }
     return allProperties.length - 2; // Desktop: 3 cards visible, slide by 1
-  };
+  }, [allProperties.length]);
   
   const [totalSlides, setTotalSlides] = useState(allProperties.length - 2); // Start with desktop value to avoid hydration mismatch
   const [isClient, setIsClient] = useState(false);
@@ -171,7 +171,7 @@ export default function PropertiesSection() {
   useEffect(() => {
     setIsClient(true);
     setTotalSlides(getMaxSlides());
-  }, []);
+  }, [getMaxSlides]);
 
   useEffect(() => {
     if (!isClient) return;
@@ -185,7 +185,7 @@ export default function PropertiesSection() {
     
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [currentSlide, isClient]);
+  }, [currentSlide, isClient, getMaxSlides]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
@@ -197,10 +197,6 @@ export default function PropertiesSection() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
-  };
-
-  const getVisibleProperties = () => {
-    return allProperties.slice(currentSlide, currentSlide + 3);
   };
 
   return (
@@ -274,7 +270,7 @@ export default function PropertiesSection() {
                   : `translateX(-${currentSlide * (100/3)}%)`
               }}
             >
-              {allProperties.map((property, index) => (
+              {allProperties.map((property) => (
                 <div key={property.id} className="min-w-[100%] md:min-w-[50%] lg:min-w-[33.333%] px-2 md:px-4 py-6">
                   <div className="property-card opacity-0 animate-[fadeInUp_1s_forwards]">
                     <PropertyCard property={property} />

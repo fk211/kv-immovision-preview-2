@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, MapPin, Home, Maximize2, Sparkles, Mountain, Car, Wifi, Dumbbell, Calendar, Euro, Users, Trees, Waves, Eye } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Home, Maximize2, Sparkles, Mountain, Car, Wifi, Dumbbell, Calendar, Trees, Waves, Eye } from 'lucide-react';
 
 interface PropertyCardProps {
   property: {

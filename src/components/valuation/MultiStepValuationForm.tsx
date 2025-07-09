@@ -17,18 +17,13 @@ import {
   Home, 
   MapPin, 
   Ruler, 
-  Calendar, 
   Euro, 
   CheckCircle2,
   Building,
-  Car,
-  Zap,
-  Thermometer,
   Shield,
   User,
   Mail,
-  Phone,
-  FileText
+  Phone
 } from 'lucide-react';
 
 interface FormData {
@@ -134,7 +129,7 @@ export default function MultiStepValuationForm() {
     setIsSubmitting(false);
   };
 
-  const updateFormData = (field: string, value: any) => {
+  const updateFormData = (field: string, value: string | number | boolean | number[]) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
