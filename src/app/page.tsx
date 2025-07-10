@@ -3,8 +3,8 @@ import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import ManifestoSection from '@/components/sections/ManifestoSection';
 import PropertiesSection from '@/components/sections/PropertiesSection';
-import ValuationSection from '@/components/sections/ValuationSection';
-import PhilosophySection from '@/components/sections/PhilosophySection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import RegionsSection from '@/components/sections/RegionsSection';
 import ContactSection from '@/components/sections/ContactSection';
 
 export default function Home() {
@@ -16,8 +16,8 @@ export default function Home() {
         <HeroSection />
         <ManifestoSection />
         <PropertiesSection />
-        <ValuationSection />
-        <PhilosophySection />
+        <TestimonialsSection />
+        <RegionsSection />
         <ContactSection />
       </main>
       

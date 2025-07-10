@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1111.34 880.89">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5, .cls-6, .cls-7, .cls-8 {
+        fill: #fff;
+      }
+
+      .cls-6 {
+        font-size: 180px;
+      }
+
+      .cls-6, .cls-7, .cls-8 {
+        font-family: PlayfairDisplayRoman-Medium, 'Playfair Display';
+        font-variation-settings: 'wght' 500;
+        font-weight: 500;
+      }
+
+      .cls-7 {
+        font-size: 100px;
+      }
+
+      .cls-8 {
+        font-size: 260px;
+      }
+    </style>
+  </defs>
+  <g id="Ebene_1-2" data-name="Ebene 1">
+    <text class="cls-8" transform="translate(386.21 574.25)"><tspan class="cls-3" x="0" y="0">K</tspan><tspan class="cls-1" x="163.28" y="0">G</tspan></text>
+    <text class="cls-6" transform="translate(70.76 736.59)"><tspan x="0" y="0">Imm</tspan><tspan class="cls-2" x="385.02" y="0">o</tspan><tspan x="483.12" y="0">vision</tspan></text>
+    <text class="cls-7" transform="translate(493.37 856.79)"><tspan class="cls-4" x="0" y="0">A</tspan><tspan x="63.2" y="0">G</tspan></text>
+    <rect class="cls-5" x="195.47" y="815.59" width="255.68" height="6"/>
+    <rect class="cls-5" x="669.49" y="815.59" width="255.68" height="6"/>
+    <path class="cls-5" d="M308.87,80.85c0-.46.36-.83.81-.83h51.45c.67,0,1.22.55,1.22,1.22h0v35.48c0,.44.35.8.79.8.15,0,.29-.04.42-.12L554.57.24c.52-.32,1.18-.32,1.7,0l329.61,200.84c.95.58,1.52,1.6,1.51,2.7-.08,21.18-.09,37.87-.03,50.08,0,.5-.19.78-.58.85-.37.07-.79-.03-1.24-.29-64.18-36.11-156.46-87.6-276.82-154.46-10.6-5.89-27.86-15.79-51.76-29.69-.44-.26-.99-.27-1.44-.02L225.11,254.66c-.38.21-.85.07-1.06-.31-.06-.11-.09-.24-.09-.37v-51.32c0-.29.15-.57.41-.73l83.59-51.28c.57-.34.91-.95.92-1.61v-68.19Z"/>
+    <path class="cls-5" d="M968.07,357.29c.12.06.17.2.12.31h-.01c-.04.1-.15.15-.24.11-31.62-13.49-64.73-25-99.32-34.52-21.96-6.06-42.1-10.98-60.43-14.78-144.43-29.98-289.6-33.81-435.5-11.5-17.27,2.65-40.49,7.07-56.79,10.2-58.15,11.15-116.76,27.95-172.41,51.32-.13.05-.28,0-.34-.12h0c-.06-.15,0-.31.13-.38,32.35-16.09,64.13-30.24,95.34-42.45,41.24-16.13,85.39-29.42,132.44-39.86,137.91-30.59,274.56-27.55,409.97,9.14,34.16,9.25,67.52,20.39,100.08,33.42,28.58,11.43,57.56,24.47,86.94,39.12Z"/>
+  </g>
+</svg>
