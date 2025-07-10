@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ArrowDown, Calculator } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import ValuationForm from '@/components/valuation/ValuationForm';
 import ValuationFormModal from '@/components/valuation/ValuationFormModal';
 
 export default function HeroSection() {

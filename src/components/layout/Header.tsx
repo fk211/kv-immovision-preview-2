@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import BrandLogo from '@/components/ui/BrandLogo';
 import { Menu, X, Phone } from 'lucide-react';

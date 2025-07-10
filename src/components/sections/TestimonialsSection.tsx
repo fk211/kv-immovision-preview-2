@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, TouchEvent } from 'react';
+import { useState, useRef, useEffect, useCallback, TouchEvent } from 'react';
 import Image from 'next/image';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -252,7 +252,7 @@ export default function TestimonialsSection() {
                       <span className="inline-block lg:hidden absolute -bottom-2 right-0 text-primary/10 transform rotate-180">
                         <Quote size={18} />
                       </span>
-                      <span className="leading-relaxed">"{testimonial.content}"</span>
+                      <span className="leading-relaxed">&ldquo;{testimonial.content}&rdquo;</span>
                     </blockquote>
                     <div>
                       <h4 className="text-base xs:text-lg sm:text-xl font-display font-medium">{testimonial.name}</h4>
