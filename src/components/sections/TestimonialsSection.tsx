@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback, TouchEvent } from 'react';
+import { useState, useRef, useEffect, TouchEvent } from 'react';
 import Image from 'next/image';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -121,6 +121,7 @@ export default function TestimonialsSection() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
   
   // Funktion, um Interval zurückzusetzen
