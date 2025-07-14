@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Home, 
   Building, 
@@ -38,6 +38,20 @@ export default function ValuationFormModal({ isOpen, onClose }: ValuationFormMod
     phone: ''
   });
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const totalSteps = formData.propertyType === 'house' ? 4 : 3;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,17 +85,20 @@ export default function ValuationFormModal({ isOpen, onClose }: ValuationFormMod
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="w-full max-w-md max-h-[90vh] overflow-y-auto animate-[fadeInUp_0.3s_ease-in-out]">
-        <Card className="p-3 xs:p-4 sm:p-5 md:p-6 bg-white/98 backdrop-blur-sm shadow-2xl border-0">
+        <Card className="p-3 xs:p-4 sm:p-5 md:p-6 bg-white/98 backdrop-blur-sm shadow-2xl border-0 relative">
+          {/* Close Button - Sticky */}
+          <button 
+            onClick={onClose}
+            className="sticky top-4 right-4 ml-auto w-10 h-10 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors shadow-lg z-30 border border-red-200 float-right"
+            style={{ marginBottom: '-2.5rem' }}
+          >
+            <X className="w-5 h-5 text-red-600" />
+          </button>
+          
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-base xs:text-lg md:text-xl font-serif text-slate-900">
               Immobilienbewertung
             </h3>
-            <button 
-              onClick={onClose}
-              className="text-slate-600 hover:text-slate-900 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
 
           <div className="space-y-3 xs:space-y-4 md:space-y-6">

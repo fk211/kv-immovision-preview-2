@@ -2,34 +2,20 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronLeft, ChevronRight, MapPin, Home, Maximize2, Sparkles, Mountain, Car, Wifi, Dumbbell, Calendar, Trees, Waves, Eye } from 'lucide-react';
+import { getPropertyUrl, type Property } from '@/data/properties';
 
 interface PropertyCardProps {
-  property: {
-    id: number;
-    name: string;
-    location: string;
-    area: string;
-    rooms: string;
-    features: string[];
-    images: string[];
-    price?: string;
-    year?: string;
-    parking?: string;
-    garden?: boolean;
-    pool?: boolean;
-    view?: string;
-    style?: string;
-    sold?: boolean;
-  };
+  property: Property;
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
+  const [isDragging, setIsDragging] = useState(false);
 
   const minSwipeDistance = 50;
 
@@ -53,42 +39,59 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
   const onTouchStart = (e: React.TouchEvent) => {
     if (property.sold) return;
-    e.preventDefault(); // Prevent default touch behavior
-    e.stopPropagation(); // Prevent parent slider from handling touch
-    setTouchEnd(0);
-    setTouchStart(e.targetTouches[0].clientX);
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setTouchEnd(null);
+    setIsDragging(false);
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (property.sold) return;
-    e.preventDefault(); // Prevent default touch behavior
-    e.stopPropagation(); // Prevent parent slider from handling touch
-    setTouchEnd(e.targetTouches[0].clientX);
+    if (property.sold || !touchStart) return;
+    
+    const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchStart.x);
+    const deltaY = Math.abs(touch.clientY - touchStart.y);
+    
+    // Lockere Erkennung: horizontale Bewegung bevorzugt, aber nicht zu streng
+    if (deltaX > 15 && deltaX > deltaY) {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(true);
+    }
+    
+    setTouchEnd({ x: touch.clientX, y: touch.clientY });
   };
 
   const onTouchEnd = (e: React.TouchEvent) => {
-    if (property.sold) return;
-    e.preventDefault(); // Prevent default touch behavior
-    e.stopPropagation(); // Prevent parent slider from handling touch
-    
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      nextImage();
-    } else if (isRightSwipe) {
-      prevImage();
+    if (property.sold || !touchStart || !touchEnd) {
+      setTouchStart(null);
+      setTouchEnd(null);
+      setIsDragging(false);
+      return;
     }
     
-    // Reset touch state
-    setTouchStart(0);
-    setTouchEnd(0);
+    // Handle swipe wenn horizontale Bewegung dominiert
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+      const deltaX = touchStart.x - touchEnd.x;
+      const deltaY = Math.abs(touchStart.y - touchEnd.y);
+      if (Math.abs(deltaX) > minSwipeDistance && Math.abs(deltaX) > deltaY) {
+        if (deltaX > 0) {
+          nextImage();
+        } else {
+          prevImage();
+        }
+      }
+    }
+    
+    setTouchStart(null);
+    setTouchEnd(null);
+    setIsDragging(false);
   };
 
   const handleImageError = (src: string) => {
+    console.log('Image loading error for:', src);
     setImageError(prev => ({ ...prev, [src]: true }));
   };
 
@@ -106,15 +109,22 @@ export default function PropertyCard({ property }: PropertyCardProps) {
   };
 
   return (
-    <div className={`group bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl hover:border-gray-300 transition-all duration-500 overflow-hidden flex flex-col transform hover:-translate-y-1 touch-none ${
-      property.sold ? 'opacity-75' : ''
-    }`} style={{ height: '520px', touchAction: 'none' }}>
+    <Link 
+      href={property.sold ? '#' : getPropertyUrl(property)}
+      className={`block group bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl hover:border-gray-300 transition-all duration-500 overflow-hidden flex flex-col transform hover:-translate-y-1 ${
+        property.sold ? 'opacity-75 cursor-default' : 'cursor-pointer'
+      }`} 
+      style={{ height: '520px' }}
+      onClick={(e) => {
+        if (property.sold) {
+          e.preventDefault();
+        }
+      }}
+    >
       {/* Image Slider */}
       <div 
-        className="relative overflow-hidden flex-shrink-0 touch-none"
-        style={{ height: '240px', touchAction: 'none' }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        className="relative overflow-hidden flex-shrink-0"
+        style={{ height: '240px', touchAction: 'pan-y pinch-zoom' }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -133,11 +143,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 fill
                 className="object-cover"
                 onError={() => handleImageError(src)}
+                onLoad={() => console.log('Image loaded successfully:', src)}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority={index === 0} // Priorität für das erste Bild
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                 <Home className="w-16 h-16 text-gray-400" />
+                <p className="text-xs text-gray-500 mt-2">Bild konnte nicht geladen werden</p>
               </div>
             )}
           </div>
@@ -152,34 +165,46 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           </div>
         )}
 
-        {/* Navigation Arrows - Only on Hover and if not sold */}
-        {!property.sold && isHovered && property.images.length > 1 && (
+        {/* Navigation Arrows - Show clearly on desktop hover */}
+        {!property.sold && property.images.length > 1 && (
           <>
             <button
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 prevImage();
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-105 transition-all duration-300 z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-105 transition-all duration-300 z-20 hidden md:opacity-0 md:group-hover:opacity-100 md:flex"
             >
               <ChevronLeft className="w-5 h-5 text-gray-800" />
             </button>
             <button
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 nextImage();
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-105 transition-all duration-300 z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-105 transition-all duration-300 z-20 hidden md:opacity-0 md:group-hover:opacity-100 md:flex"
             >
               <ChevronRight className="w-5 h-5 text-gray-800" />
             </button>
           </>
         )}
 
-        {/* Image Counter - Only if not sold */}
+        {/* Image Counter & Swipe Indicator - Only if not sold */}
         {!property.sold && (
-          <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm">
-            {currentImageIndex + 1} / {property.images.length}
+          <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm flex items-center">
+            {/* Swipe Indicator - Only on mobile with multiple images */}
+            {property.images.length > 1 && (
+              <div className="md:hidden flex items-center mr-2">
+                <ChevronLeft className="w-3 h-3" />
+                <span className="mx-1 text-sm font-medium">swipe</span>
+                <ChevronRight className="w-3 h-3" />
+              </div>
+            )}
+            
+            {/* Image Counter */}
+            <span>{currentImageIndex + 1} / {property.images.length}</span>
           </div>
         )}
 
@@ -287,6 +312,6 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -3,159 +3,14 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import PropertyCard from '@/components/properties/PropertyCard';
-
-const properties = [
-  {
-    id: 1,
-    name: "Residenz Kössen",
-    location: "Kitzbüheler Alpen, Österreich",
-    area: "320 m²",
-    rooms: "5 Zimmer",
-    year: "2021",
-    parking: "2 Stellplätze",
-    view: "Alpenpanorama",
-    style: "Modern",
-    features: ["Privatgarten", "Infinity-Pool", "Alpenpanorama", "Wellness-Bereich"],
-    images: [
-      "/images/properties/haus-koessen/haus-1.jpg",
-      "/images/properties/haus-koessen/wohnzimmer-5.jpg",
-      "/images/properties/haus-koessen/schlafzimmer-1.jpg",
-      "/images/properties/haus-koessen/badezimmer-1.jpg",
-      "/images/properties/haus-koessen/garten-1.jpg",
-      "/images/properties/haus-koessen/pool-2.jpg"
-    ]
-  },
-  {
-    id: 2,
-    name: "Villa Kufstein",
-    location: "Kufstein, Österreich",
-    area: "280 m²",
-    rooms: "4 Zimmer",
-    year: "2020",
-    parking: "Garage",
-    view: "Stadtblick",
-    style: "Minimalistisch",
-    features: ["Minimalistische Architektur", "Wellness-Bereich", "Panoramaterrasse", "Smart-Home"],
-    images: [
-      "/images/properties/haus-kufstein/haus-2.jpg",
-      "/images/properties/haus-kufstein/schlafzimmer-9.jpg",
-      "/images/properties/haus-kufstein/badezimmer-2.jpg",
-      "/images/properties/haus-kufstein/pool-1.jpg"
-    ]
-  },
-  {
-    id: 3,
-    name: "Domizil Vorarlberg",
-    location: "Vorarlberg, Österreich",
-    area: "450 m²",
-    rooms: "6 Zimmer",
-    year: "2019",
-    parking: "3 Stellplätze",
-    view: "Bergpanorama",
-    style: "Luxuriös",
-    features: ["Luxuriöse Ausstattung", "Parkähnlicher Garten", "Exklusiver Pool", "Weinkeller"],
-    images: [
-      "/images/properties/haus-vorarlberg/haus-5.jpg",
-      "/images/properties/haus-vorarlberg/wohnzimmer-2.jpg",
-      "/images/properties/haus-vorarlberg/schlafzimmer-7.jpg",
-      "/images/properties/haus-vorarlberg/badezimmer-3.jpg",
-      "/images/properties/haus-vorarlberg/garten-2.jpg",
-      "/images/properties/haus-vorarlberg/pool-3.jpg"
-    ]
-  },
-  {
-    id: 4,
-    name: "Penthouse Oberhaching",
-    location: "Oberhaching, Deutschland",
-    area: "380 m²",
-    rooms: "7 Zimmer",
-    year: "2022",
-    parking: "Tiefgarage",
-    view: "Panoramablick",
-    style: "Exklusiv",
-    features: ["Exklusiver Wellness-Bereich", "Rooftop-Pool", "Panoramablick", "Butler-Service"],
-    images: [
-      "/images/properties/mfh-oberhaching/haus-3.jpg",
-      "/images/properties/mfh-oberhaching/wohnzimmer-3.jpg",
-      "/images/properties/mfh-oberhaching/schlafzimmer-8.jpg",
-      "/images/properties/mfh-oberhaching/badezimmer-4.jpg",
-      "/images/properties/mfh-oberhaching/pool-4.jpg",
-      "/images/properties/mfh-oberhaching/pool-innen-1.jpg"
-    ]
-  },
-  {
-    id: 5,
-    name: "Residenz Tengstraße",
-    location: "München, Deutschland",
-    area: "250 m²",
-    rooms: "4 Zimmer",
-    year: "2021",
-    parking: "1 Stellplatz",
-    view: "Stadtblick",
-    style: "Elegant",
-    features: ["Zentrale Lage", "Stilvolle Architektur", "Südterrasse", "Concierge-Service"],
-    images: [
-      "/images/properties/tengstr/haus-4.jpg",
-      "/images/properties/tengstr/wohnzimmer-1.jpg",
-      "/images/properties/tengstr/wohnzimmer-4.jpg",
-      "/images/properties/tengstr/schlafzimmer-6.jpg",
-      "/images/properties/tengstr/badezimmer-5.jpg",
-      "/images/properties/tengstr/terrasse-1.jpg"
-    ]
-  }
-];
+import { allProperties } from '@/data/properties';
 
 export default function PropertiesSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Fake "VERKAUFT" properties
-  const soldProperties = [
-    {
-      id: 101,
-      name: "Villa München",
-      location: "München, Deutschland",
-      area: "420 m²",
-      rooms: "6 Zimmer",
-      year: "2020",
-      parking: "2 Stellplätze",
-      view: "Stadtblick",
-      style: "VERKAUFT",
-      features: ["Verkauft"],
-      images: ["https://placehold.co/600x400/f3f4f6/6b7280?text=VERKAUFT"],
-      sold: true
-    },
-    {
-      id: 102,
-      name: "Penthouse Berlin",
-      location: "Berlin, Deutschland", 
-      area: "380 m²",
-      rooms: "5 Zimmer",
-      year: "2021",
-      parking: "Tiefgarage",
-      view: "Panoramablick",
-      style: "VERKAUFT",
-      features: ["Verkauft"],
-      images: ["https://placehold.co/600x400/f3f4f6/6b7280?text=VERKAUFT"],
-      sold: true
-    },
-    {
-      id: 103,
-      name: "Landhaus Salzburg",
-      location: "Salzburg, Österreich",
-      area: "520 m²", 
-      rooms: "8 Zimmer",
-      year: "2019",
-      parking: "3 Stellplätze",
-      view: "Alpenpanorama",
-      style: "VERKAUFT",
-      features: ["Verkauft"],
-      images: ["https://placehold.co/600x400/f3f4f6/6b7280?text=VERKAUFT"],
-      sold: true
-    }
-  ];
-
-  const allProperties = [...properties, ...soldProperties];
+  // (Diese sind jetzt in der allProperties aus der Data-Datei enthalten)
   
   // Mobile: 1 card per slide, Desktop: 3 cards visible but 1 slide
   const getMaxSlides = useCallback(() => {
@@ -163,7 +18,7 @@ export default function PropertiesSection() {
       return allProperties.length; // Mobile: each card is a slide
     }
     return allProperties.length - 2; // Desktop: 3 cards visible, slide by 1
-  }, [allProperties.length]);
+  }, []);
   
   const [totalSlides, setTotalSlides] = useState(allProperties.length - 2); // Start with desktop value to avoid hydration mismatch
   const [isClient, setIsClient] = useState(false);
@@ -188,11 +43,11 @@ export default function PropertiesSection() {
   }, [currentSlide, isClient, getMaxSlides]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
   const goToSlide = (index: number) => {
@@ -222,35 +77,33 @@ export default function PropertiesSection() {
             <>
               <button
                 onClick={prevSlide}
-                disabled={currentSlide === 0}
-                className="hidden lg:flex absolute -left-16 xl:-left-20 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-300 z-20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="hidden lg:flex absolute -left-16 xl:-left-20 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-300 z-20"
               >
                 <ChevronLeft className="w-6 h-6 text-gray-800" />
               </button>
               <button
                 onClick={nextSlide}
-                disabled={currentSlide === totalSlides - 1}
-                className="hidden lg:flex absolute -right-16 xl:-right-20 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-300 z-20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="hidden lg:flex absolute -right-16 xl:-right-20 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-300 z-20"
               >
                 <ChevronRight className="w-6 h-6 text-gray-800" />
               </button>
             </>
           )}
 
-          {/* Mobile Navigation Arrows - Positioned further out from title */}
+          {/* Mobile Navigation Arrows - Positioned higher up */}
           {totalSlides > 1 && (
             <>
               <button
                 onClick={prevSlide}
-                disabled={currentSlide === 0}
-                className="lg:hidden absolute -left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:scale-110 transition-all duration-300 z-30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="lg:hidden absolute -left-2 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:scale-110 transition-all duration-300 z-30"
+                style={{ top: 'calc(50% - 50px)' }}
               >
                 <ChevronLeft className="w-6 h-6 text-gray-800" />
               </button>
               <button
                 onClick={nextSlide}
-                disabled={currentSlide === totalSlides - 1}
-                className="lg:hidden absolute -right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:scale-110 transition-all duration-300 z-30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="lg:hidden absolute -right-2 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:scale-110 transition-all duration-300 z-30"
+                style={{ top: 'calc(50% - 50px)' }}
               >
                 <ChevronRight className="w-6 h-6 text-gray-800" />
               </button>
