@@ -39,9 +39,9 @@ export default function ManifestoSection() {
               </div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-display text-primary mb-4">98%</div>
+              <div className="text-4xl font-display text-primary mb-4">250 Mio. €</div>
               <div className="text-sm uppercase tracking-widest text-muted-foreground font-medium">
-                Weiterempfehlungsrate
+                Transaktionsvolumen
               </div>
             </div>
           </div>

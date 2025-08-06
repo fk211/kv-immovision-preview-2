@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import ValuationModal from '@/components/modals/ValuationModal';
 import ConsultationModal from '@/components/modals/ConsultationModal';
 
-export default function HeroSection() {
+export default function VerkaufHeroSection() {
   const [scrollY, setScrollY] = useState(0);
   const [isValuationModalOpen, setIsValuationModalOpen] = useState(false);
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
@@ -18,37 +18,8 @@ export default function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Prevent background scrolling when modal is open
-  useEffect(() => {
-    if (isConsultationModalOpen || isValuationModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isConsultationModalOpen, isValuationModalOpen]);
-
-  const openValuationModal = () => {
-    setIsValuationModalOpen(true);
-  };
-
-  const closeValuationModal = () => {
-    setIsValuationModalOpen(false);
-  };
-
-  const openConsultationModal = () => {
-    setIsConsultationModalOpen(true);
-  };
-
-  const closeConsultationModal = () => {
-    setIsConsultationModalOpen(false);
-  };
-
   const handleScrollToNext = () => {
-    const nextSection = document.querySelector('#manifesto');
+    const nextSection = document.querySelector('#verkaufsprozess');
     nextSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -57,8 +28,8 @@ export default function HeroSection() {
       {/* Background with Parallax */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-1.jpg"
-          alt="KG Immovision AG"
+          src="/images/properties/haus-vorarlberg/haus-5.jpg"
+          alt="Verkaufen Sie Ihre Immobilie"
           fill
           className="object-cover"
           style={{
@@ -77,50 +48,49 @@ export default function HeroSection() {
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-white leading-tight">
                 <span className="block opacity-0 animate-[fadeInUp_1s_0.2s_forwards]">
-                  VK Immovision AG
+                  Verkaufen Sie Ihre Immobilie
+                </span>
+                <span className="block text-white opacity-0 animate-[fadeInUp_1s_0.4s_forwards]">
+                  mit Exzellenz
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-slate-200 font-light opacity-0 animate-[fadeInUp_1s_0.4s_forwards]">
-                Ihr Partner für außergewöhnliche Immobilien
+              <p className="text-xl md:text-2xl text-slate-200 font-light opacity-0 animate-[fadeInUp_1s_0.6s_forwards]">
+                Diskrete Vermarktung. Maximaler Ertrag. Vertrauensvolle Begleitung.
               </p>
             </div>
 
-            <p className="text-lg text-white/90 max-w-2xl leading-relaxed opacity-0 animate-[fadeInUp_1s_0.6s_forwards]">
-              Persönliche Beratung und diskrete Vermittlung exklusiver Immobilien –
-              spezialisiert auf Off-Market-Objekte für anspruchsvolle Kunden seit über 15 Jahren.
+            <p className="text-lg text-white/90 max-w-2xl leading-relaxed opacity-0 animate-[fadeInUp_1s_0.8s_forwards]">
+              Der Verkauf einer exklusiven Immobilie erfordert Fingerspitzengefühl, Marktkenntnis und 
+              absolute Diskretion. Wir verstehen den Wert Ihrer Immobilie über den reinen Marktwert hinaus.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-[fadeInUp_1s_0.8s_forwards]">
+            <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-[fadeInUp_1s_1.0s_forwards]">
               <Button 
                 size="lg" 
-                onClick={openConsultationModal}
+                onClick={() => setIsConsultationModalOpen(true)}
                 className="bg-white text-slate-900 hover:bg-slate-100 px-8 py-3 flex items-center gap-2 font-medium"
               >
                 <Calendar className="w-5 h-5" />
-                Erstgespräch vereinbaren
+                Verkaufsberatung vereinbaren
               </Button>
               
               <Button 
                 size="lg" 
-                onClick={openValuationModal}
+                onClick={() => setIsValuationModalOpen(true)}
                 className="bg-slate-800/80 hover:bg-slate-700 text-white border border-white/20 px-8 py-3 flex items-center gap-2 font-medium"
               >
                 <Calculator className="w-5 h-5" />
-                Immobilie bewerten
+                Marktwert ermitteln
               </Button>
             </div>
           </div>
 
           {/* Rechte Spalte leer lassen für ein ausgewogenes Layout */}
           <div className="lg:col-span-5">
-            {/* Leer gelassen wie angefordert */}
+            {/* Leer gelassen wie in der originalen Hero Section */}
           </div>
         </div>
       </div>
-
-      {/* Modals */}
-      <ValuationModal isOpen={isValuationModalOpen} onClose={closeValuationModal} />
-      <ConsultationModal isOpen={isConsultationModalOpen} onClose={closeConsultationModal} />
 
       {/* Scroll Indicator */}
       <button
@@ -129,6 +99,22 @@ export default function HeroSection() {
       >
         <ArrowDown className="text-white/80 group-hover:text-white transition-colors" size={20} />
       </button>
+
+      {/* Modals */}
+      <ValuationModal 
+        isOpen={isValuationModalOpen}
+        onClose={() => setIsValuationModalOpen(false)}
+        title="Marktwert Ihrer Immobilie ermitteln"
+        subtitle="Erhalten Sie eine kostenlose professionelle Bewertung"
+      />
+
+      <ConsultationModal 
+        isOpen={isConsultationModalOpen}
+        onClose={() => setIsConsultationModalOpen(false)}
+        title="Verkaufsberatung vereinbaren"
+        subtitle="Besprechen Sie Ihre Verkaufspläne mit unseren Experten"
+        consultationType="verkauf"
+      />
     </section>
   );
 }

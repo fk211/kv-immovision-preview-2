@@ -32,6 +32,7 @@ export default function Header() {
 
   const navItems = [
     { href: '#referenzen', label: 'Referenzen' },
+    { href: '/verkauf', label: 'Verkauf' },
     { href: '#testimonials', label: 'Kundenstimmen' },
     { href: '#regionen', label: 'Märkte' },
   ];

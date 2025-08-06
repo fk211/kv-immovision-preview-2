@@ -2,10 +2,11 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import ManifestoSection from '@/components/sections/ManifestoSection';
-import PropertiesSection from '@/components/sections/PropertiesSection';
+import PhilosophySection from '@/components/sections/PhilosophySection';
+import ApproachSection from '@/components/sections/ApproachSection';
+import StorySection from '@/components/sections/StorySection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import RegionsSection from '@/components/sections/RegionsSection';
-import ContactSection from '@/components/sections/ContactSection';
 
 export default function Home() {
   return (
@@ -15,10 +16,11 @@ export default function Home() {
       <main>
         <HeroSection />
         <ManifestoSection />
-        <PropertiesSection />
+        <ApproachSection />
+        <PhilosophySection />
+        <StorySection />
         <TestimonialsSection />
         <RegionsSection />
-        <ContactSection />
       </main>
       
       <Footer />

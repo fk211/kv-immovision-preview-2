@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Progress } from '@/components/ui/progress';
@@ -83,24 +82,24 @@ export default function ValuationFormModal({ isOpen, onClose }: ValuationFormMod
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto animate-[fadeInUp_0.3s_ease-in-out]">
-        <Card className="p-3 xs:p-4 sm:p-5 md:p-6 bg-white/98 backdrop-blur-sm shadow-2xl border-0 relative">
-          {/* Close Button - Sticky */}
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[85vh] md:max-h-[80vh] overflow-hidden flex flex-col my-8">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <Home className="text-slate-600" size={24} />
+            <h2 className="text-lg sm:text-xl md:text-2xl font-display text-slate-900">Immobilienbewertung</h2>
+          </div>
           <button 
             onClick={onClose}
-            className="sticky top-4 right-4 ml-auto w-10 h-10 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors shadow-lg z-30 border border-red-200 float-right"
-            style={{ marginBottom: '-2.5rem' }}
+            className="text-slate-400 hover:text-slate-600 transition-colors"
           >
-            <X className="w-5 h-5 text-red-600" />
+            <X size={24} />
           </button>
-          
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-base xs:text-lg md:text-xl font-serif text-slate-900">
-              Immobilienbewertung
-            </h3>
-          </div>
+        </div>
 
+        {/* Content */}
+        <div className="p-6 overflow-y-auto flex-1">
           <div className="space-y-3 xs:space-y-4 md:space-y-6">
             <div className="flex items-center justify-between">
               <p className="text-slate-600 text-xs sm:text-sm">
@@ -325,7 +324,7 @@ export default function ValuationFormModal({ isOpen, onClose }: ValuationFormMod
               </p>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );
