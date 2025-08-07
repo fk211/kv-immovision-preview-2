@@ -4,15 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Restore normal cursor */
-body {
-  cursor: auto !important;
-}
-
-* {
-  cursor: auto !important;
-}
-
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

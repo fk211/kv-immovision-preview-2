@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import BrandLogo from '@/components/ui/BrandLogo';
 import { Menu, X, Phone } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,10 +32,10 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   const navItems = [
-    { href: '#referenzen', label: 'Referenzen' },
+    { href: '/referenzen', label: 'Referenzen' },
     { href: '/verkauf', label: 'Verkauf' },
-    { href: '#testimonials', label: 'Kundenstimmen' },
-    { href: '#regionen', label: 'Märkte' },
+    { href: '/ueber-uns', label: 'Über uns' },
+    { href: '/faq', label: 'FAQ' },
   ];
 
   return (
@@ -54,10 +55,10 @@ export default function Header() {
           {/* Left Navigation */}
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
             {navItems.slice(0, Math.ceil(navItems.length / 2)).map((item) => (
-              <a 
+              <Link 
                 key={item.href}
                 href={item.href} 
-                className={`relative group transition-all duration-300 ${
+                className={`relative group transition-all duration-300 cursor-pointer ${
                   scrolled 
                     ? 'text-slate-800 hover:text-primary text-xs' 
                     : 'text-white hover:text-white/90 drop-shadow-lg text-sm'
@@ -67,7 +68,7 @@ export default function Header() {
                 <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
                   scrolled ? 'bg-primary' : 'bg-white'
                 }`} />
-              </a>
+              </Link>
             ))}
           </nav>
           
@@ -80,10 +81,10 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-8">
             <nav className="flex items-center space-x-8 text-sm font-medium">
               {navItems.slice(Math.ceil(navItems.length / 2)).map((item) => (
-                <a 
+                <Link 
                   key={item.href}
                   href={item.href} 
-                  className={`relative group transition-all duration-300 ${
+                  className={`relative group transition-all duration-300 cursor-pointer ${
                     scrolled 
                       ? 'text-slate-800 hover:text-primary text-xs' 
                       : 'text-white hover:text-white/90 drop-shadow-lg text-sm'
@@ -93,24 +94,25 @@ export default function Header() {
                   <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
                     scrolled ? 'bg-primary' : 'bg-white'
                   }`} />
-                </a>
+                </Link>
               ))}
             </nav>
 
             {/* Desktop Contact Button */}
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className={`hidden md:inline-flex rounded-full font-medium border-2 transition-all duration-300 ${
-                scrolled 
-                  ? 'hover:bg-primary hover:text-primary-foreground hover:border-primary py-1 px-3 text-xs scale-90' 
-                  : 'text-white border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white hover:text-black hover:border-white drop-shadow-lg'
-              }`}
-              onClick={() => document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <Phone className={`mr-2 ${scrolled ? 'w-3 h-3' : 'w-4 h-4'}`} />
-              Kontakt
-            </Button>
+            <Link href="/kontakt" className="cursor-pointer">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className={`hidden md:inline-flex rounded-full font-medium border-2 transition-all duration-300 cursor-pointer ${
+                  scrolled 
+                    ? 'bg-black text-white border-black hover:bg-white hover:text-black hover:border-black py-1 px-3 text-xs scale-90' 
+                    : 'bg-black text-white border-black hover:bg-white hover:text-black hover:border-black drop-shadow-lg'
+                }`}
+              >
+                <Phone className={`mr-2 ${scrolled ? 'w-3 h-3' : 'w-4 h-4'}`} />
+                Kontakt
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Logo and Menu Button */}
@@ -170,39 +172,38 @@ export default function Header() {
         <div className="w-full max-w-md px-4 sm:px-6 z-10 relative">
           <nav className="flex flex-col items-center space-y-6 sm:space-y-7 text-center mt-16 sm:mt-20 lg:mt-24">
             {navItems.map((item, index) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 style={{ '--stagger': `${index * 120 + 200}ms` } as React.CSSProperties}
                 className={`text-xl sm:text-2xl font-display text-slate-900 relative z-10 group
-                          py-2 px-6 transition-all duration-300 touch-manipulation
+                          py-2 px-6 transition-all duration-300 touch-manipulation cursor-pointer
                           ${mobileMenuOpen ? 'animate-staggered-slide-down' : 'opacity-0'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
                 <span className="block h-0.5 w-0 group-hover:w-full bg-primary transition-all duration-300 mt-1 origin-left"></span>
                 <span className="absolute -inset-x-4 inset-y-0 bg-slate-50/0 group-hover:bg-slate-50/80 -z-10 rounded-lg transform scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:scale-100"></span>
-              </a>
+              </Link>
             ))}
             
             <div 
               style={{ '--stagger': `${navItems.length * 120 + 300}ms` } as React.CSSProperties} 
               className={`mt-8 sm:mt-10 relative z-10 ${mobileMenuOpen ? 'animate-bounce-in' : 'opacity-0'}`}
             >
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="rounded-full font-medium border-2 border-slate-800 text-slate-800 transition-all duration-300 
-                         hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 active:scale-95
-                         shadow-sm hover:shadow-md touch-manipulation text-base sm:text-lg px-6 py-3"
-                onClick={() => {
-                  document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' });
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Kontakt
-              </Button>
+              <Link href="/kontakt" className="cursor-pointer">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="rounded-full font-medium border-2 bg-black text-white border-black transition-all duration-300 
+                           hover:bg-white hover:text-black hover:border-black hover:scale-105 active:scale-95 cursor-pointer
+                           shadow-sm hover:shadow-md touch-manipulation text-base sm:text-lg px-6 py-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                  Kontakt
+                </Button>
+              </Link>
             </div>
           </nav>
         </div>

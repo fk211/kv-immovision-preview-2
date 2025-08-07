@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface BrandLogoProps {
   scrolled?: boolean;
@@ -14,8 +15,8 @@ export default function BrandLogo({ scrolled = false, mobileMenuOpen = false, cl
   // 2. Beim Scrollen: schwarzes Logo
   // 3. Standard/Anfang: weißes Logo für besseren Kontrast auf dunklem Hintergrund
   const logoSrc = mobileMenuOpen || scrolled 
-    ? '/images/logos/kg-immovision-logo-small.svg'
-    : '/images/logos/kg-immovision-logo-white.svg';
+    ? '/images/logos/vk-immo-logo-small.svg'
+    : '/images/logos/vk-immo-logo-white.svg';
   
   // Mobile-first responsive Logo-Größen
   const getLogoSize = () => {
@@ -31,10 +32,14 @@ export default function BrandLogo({ scrolled = false, mobileMenuOpen = false, cl
   const logoSize = getLogoSize();
   
   return (
-    <div className={`relative transition-all duration-300 py-1 sm:py-1.5 md:py-2 lg:py-3 ${className}`}>
+    <Link 
+      href="/" 
+      className={`relative transition-all duration-300 py-1 sm:py-1.5 md:py-2 lg:py-3 cursor-pointer hover:cursor-pointer ${className}`}
+      style={{ cursor: 'pointer' }}
+    >
       <Image
         src={logoSrc}
-        alt="KG Immovision AG"
+        alt="VK Immovision AG"
         width={logoSize.width}
         height={logoSize.height}
         priority
@@ -44,6 +49,6 @@ export default function BrandLogo({ scrolled = false, mobileMenuOpen = false, cl
           maxHeight: logoSize.maxHeight
         }}
       />
-    </div>
+    </Link>
   );
 }

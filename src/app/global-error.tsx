@@ -1,0 +1,27 @@
+'use client';
+
+export default function GlobalError({
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    <html>
+      <body>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-4">Etwas ist schiefgelaufen!</h2>
+            <p className="mb-4">Es ist ein globaler Fehler aufgetreten.</p>
+            <button
+              onClick={() => reset()}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Erneut versuchen
+            </button>
+          </div>
+        </div>
+      </body>
+    </html>
+  );
+}

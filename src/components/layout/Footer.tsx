@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -9,8 +11,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="text-2xl font-serif font-bold mb-4">
-              KG<span className="text-primary">.</span>
+            <div className="mb-4">
+              <Image
+                src="/images/logos/vk-immo-logo.svg"
+                alt="VK Immovision AG"
+                width={210}
+                height={75}
+                className="h-18 w-auto"
+                style={{ objectFit: 'contain' }}
+              />
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
               Wir kuratieren architektonische Meisterwerke und realisieren Lebensträume. 
@@ -22,16 +31,16 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Navigation</h4>
             <nav className="space-y-2">
-              <a href="#kollektion" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Kollektion
+              <a href="/referenzen" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Referenzen
               </a>
-              <a href="#philosophie" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Philosophie
+              <a href="/verkauf" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Verkauf
               </a>
-              <a href="#bewertung" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Bewertung
+              <a href="/ueber-uns" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Über uns
               </a>
-              <a href="#kontakt" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <a href="/kontakt" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Kontakt
               </a>
             </nav>
@@ -43,8 +52,8 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>Dorf 109</p>
               <p>9428 Walzenhausen, Schweiz</p>
-              <a href="mailto:kontakt@kg-immovision.ch" className="block hover:text-primary transition-colors">
-                kontakt@kg-immovision.ch
+              <a href="mailto:kontakt@vk-immovision.ch" className="block hover:text-primary transition-colors">
+                kontakt@vk-immovision.ch
               </a>
               <a href="tel:+4915127276715" className="block hover:text-primary transition-colors">
                 +49 151 27276715
@@ -57,13 +66,13 @@ export default function Footer() {
         <div className="pt-8 border-t border-border/30">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
             <p>
-              &copy; {currentYear} KG Immovision AG. Ein Unternehmen der Valentin Immovision AG.
+              &copy; {currentYear} VK Immovision AG. Ein Projekt der Valentin Immovision AG.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-primary transition-colors">
+              <a href="/impressum" className="hover:text-primary transition-colors">
                 Impressum
               </a>
-              <a href="#" className="hover:text-primary transition-colors">
+              <a href="/datenschutz" className="hover:text-primary transition-colors">
                 Datenschutz
               </a>
               <a href="#" className="hover:text-primary transition-colors">
